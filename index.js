@@ -4,10 +4,10 @@ import fs from "fs";
 
 import json from "body-parser";
 const app = express();
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
 
 import { fileURLToPath } from "url";
-import { dirname } from "path";
+import path, { dirname } from "path";
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -15,9 +15,6 @@ const __dirname = dirname(__filename);
 // Middleware to parse JSON bodies
 app.use(json());
 
-// Serve static HTML files
-// app.use(static("public"));
-// Remove this line that uses 'static' keyword
 app.use(express.static("public"));
 
 // Routes
@@ -29,40 +26,20 @@ app.get("/public/styles.css", (req, res) => {
   res.sendFile(__dirname + "/public/styles.css");
 });
 
-app.get("/users", (req, res) => {
+app.get("/users", async (req, res) => {
   try {
-    const data = readFileSync("users.txt", "utf8");
-    if (!data.trim()) {
-      return res.redirect("/create");
+    const data = fs.readFileSync("users.txt", "utf8");
+    const users = data.split("\n").filter(Boolean);
+    if (users.length === 0) {
+      res.redirect("/create");
+      return;
     }
-    const users = data.trim().split("\n");
-    res.send(`
-            <h1>Users</h1>
-            <ul>${users.map((user) => `<li>${user}</li>`).join("")}</ul>
-        `);
-  } catch (err) {
-    console.error("Error reading file:", err);
-    res.redirect("/create");
+    res.sendFile(path.join(__dirname, "users.html"));
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Internal Server Error");
   }
 });
-
-// app.get("/users", (req, res) => {
-//   try {
-//     const data = readFileSync("users.txt", "utf8");
-//     if (!data.trim()) {
-//       return res.redirect("/create");
-//     }
-//     const users = data
-//       .trim()
-//       .split("\n")
-//       .map((user) => `<li>${user}</li>`)
-//       .join("");
-//     res.send(`<h1>Users</h1><ul>${users}</ul>`);
-//   } catch (err) {
-//     console.error("Error reading file:", err);
-//     res.redirect("/create");
-//   }
-// });
 
 app.get("/create", (req, res) => {
   res.sendFile(__dirname + "/create.html");

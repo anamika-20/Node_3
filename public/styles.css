@@ -1,42 +1,83 @@
-body {
-  font-family: Arial, sans-serif;
-  background-color: #f0f0f0;
+/* Reset default margin and padding */
+* {
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
-h1 {
+/* Body styles */
+body {
+  font-family: "Roboto", sans-serif;
+  background-color: #f0f0f0;
+  padding: 20px;
+}
+
+/* Container for center alignment and box */
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  background-color: #fff;
+}
+
+/* Heading styles */
+h1,
+h2 {
   color: #333;
+  margin-bottom: 20px;
+  text-align: center;
 }
 
+/* Form styles */
 form {
-  margin-top: 20px;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: bold;
 }
 
 input[type="text"] {
-  padding: 8px;
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 15px;
   border: 1px solid #ccc;
   border-radius: 5px;
 }
 
 button {
-  padding: 8px 16px;
+  display: inline-block;
+  padding: 10px 20px;
   border: none;
   border-radius: 5px;
   background-color: #4caf50;
   color: white;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 button:hover {
   background-color: #45a049;
 }
 
+/* List styles */
 ul {
   list-style-type: none;
   padding: 0;
 }
 
-ul li {
+li {
+  background-color: #f9f9f9;
+  padding: 15px;
   margin-bottom: 10px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  max-width: 500px;
+  margin-left: auto;
+  margin-right: auto;
 }
